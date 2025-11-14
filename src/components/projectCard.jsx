@@ -1,206 +1,162 @@
-import { Box, Typography, Chip, Button, Stack } from "@mui/material";
-
+import { Box, Typography, Chip, Button, Stack, Container } from "@mui/material";
+ 
 export default function Projectcard({ project, direction }) {
-  return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: {
-          xs: "column",
-          md: direction === "image-right" ? "row-reverse" : "row",
-        },
-        alignItems: "center",
-        justifyContent: "space-between",
-        backgroundColor: project.bgColor,
-        color: "white",
-        minHeight: "100vh",
-        px: 0,
-        gap: 0,
-        position: "relative",
-        overflow: "hidden",
-        textAlign: { xs: "left", md: "left" }, // ✅ changed "center" → "left" for xs
-      }}
-    >
-      {/* ---------------- TEXT SECTION ---------------- */}
-      <Box
-        sx={{
-          flex: 1,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: { xs: "flex-start", md: "flex-start" }, // ✅ text starts from left on mobile
-          position: "relative",
-          left:
-            direction === "image-right"
-              ? { xs: "0px", md: "60px" }
-              : { xs: "0px", md: "40px" },
-          zIndex: 2,
-          textAlign: { xs: "left", md: "left" },
-          px: { xs: 3, sm: 5, md: 0 },
-        }}
-      >
-        {/* Title */}
-        <Typography
-          variant="h4"
-          sx={{
-            fontWeight: "bold",
-            mb: 2,
-            mt:2,
-            fontSize: { xs: "1.8rem", sm: "2rem", md: "2.5rem" },
-          }}
-        >
-          {project.projectTitle}
-        </Typography>
-
-        {/* Subtitle */}
-        <Typography
-          variant="h6"
-          sx={{
-            fontWeight: 600,
-            lineHeight: 1.5,
-            fontSize: { xs: "1rem", md: "1.1rem" },
-            maxWidth: { xs: "90%", md: "100%" },
-          }}
-        >
-          {project.subtitle}
-        </Typography>
-
-        {/* Description */}
-        <Typography
-          sx={{
-            lineHeight: 1.7,
-            fontSize: { xs: "0.95rem", md: "1rem" },
-            maxWidth: { xs: "90%", md: "90%" },
-            mt: 1,
-          }}
-        >
-          {project.description}
-        </Typography>
-
-        {/* Points */}
-        <Box
-          component="ul"
-          sx={{
-            pl: 0,
-            ml: { xs: 0, md: -3 },
-            listStylePosition: "inside",
-            fontSize: { xs: "0.85rem", md: "1rem" },
-            lineHeight: 2,
-            "& li": {
-              marginBottom: "8px",
-            },
-          }}
-        >
-          {project.points.map((point, index) => (
-            <li key={index}>{point}</li>
-          ))}
-        </Box>
-
-        {/* Chips */}
-        <Stack
-          direction={{ xs: "column", sm: "column", md: "row" }}
-          spacing={1.5}
-          alignItems={{ xs: "flex-start", md: "flex-start" }} // ✅ left-align chips on mobile
-          justifyContent={{ xs: "flex-start", md: "flex-start" }}
-          sx={{
-            mb: 4,
-            flexWrap: "wrap",
-            fontSize: { xs: "0.9rem", md: "1rem" },
-          }}
-        >
-          {project.tags.map((tag, index) => (
-            <Chip
-              key={index}
-              label={tag}
-              sx={{
-                backgroundColor: "rgba(255,255,255,0.2)",
-                color: "white",
-                fontSize: { xs: "0.85rem", md: "1rem" },
-                px: { xs: 1, md: 2 },
-              }}
+    const isRight = direction === "image-left";
+ 
+    return (
+        <Box sx={{ backgroundColor: project.bgColor, position: "relative", overflow: "hidden" }}>
+            <Box
+                component="img"
+                src={project.bgImage}
+                alt="bg"
+                sx={{
+                    position: "absolute",
+                    top: 0,
+                    [isRight ? "right" : "left"]: 0,
+                    width: "50%",
+                    height: "100%",
+                    objectFit: "cover",
+                    display: { xs: "none", md: "block" },
+                    zIndex: 1,
+                }}
             />
-          ))}
-        </Stack>
-
-        {/* Button */}
-        <Button
-          variant="outlined"
-          sx={{
-            borderColor: "white",
-            color: "white",
-            borderRadius: "10px",
-            px: 3,
-            py: 1,
-            textTransform: "none",
-            fontWeight: "bold",
-            fontSize: { xs: "0.9rem", md: "1rem" },
-            alignSelf: { xs: "flex-start", md: "flex-start" }, // ✅ button also aligns left
-            "&:hover": {
-              borderColor: "#fff",
-              backgroundColor: "rgba(255,255,255,0.1)",
-            },
-          }}
-        >
-          View Case Study
-        </Button>
-
-        {/* ✅ Overlay image appears BELOW the button on XS only */}
-        <Box
-          component="img"
-          src={project.overlayImage}
-          alt={`${project.projectTitle} overlay`}
-          sx={{
-            display: { xs: "block", md: "none" },
-            width: { xs: "220px" },
-            height: "auto",
-            mt: 3,
-          }}
-        />
-      </Box>
-
-      {/* ---------------- IMAGE SECTION ---------------- */}
-      <Box
-        sx={{
-          flex: 1,
-          display: { xs: "none", md: "flex" },
-          justifyContent: "center",
-          alignItems: "center",
-          overflow: "hidden",
-          position: "relative",
-        }}
-      >
-        <Box
-          component="img"
-          src={project.bgImage}
-          alt={`${project.projectTitle} background`}
-          sx={{
-            width: "118%",
-            height: "730px",
-            objectFit: "cover",
-          }}
-        />
-      </Box>
-
-      {/* ---------------- OVERLAY IMAGE ---------------- */}
-      <Box
-        component="img"
-        src={project.overlayImage}
-        alt={`${project.projectTitle} overlay`}
-        sx={{
-          display: { xs: "none", md: "block" },
-          position: "absolute",
-          top: "59%",
-          left:
-            direction === "image-right"
-              ? { xs: "50%", md: "45%" }
-              : { xs: "50%", md: "55%" },
-          transform: "translate(-55%, -56%)",
-          width: { xs: "120px", sm: "180px", md: "200px" },
-          height: "auto",
-          zIndex: 3,
-          transition: "all 0.3s ease",
-        }}
-      />
-    </Box>
-  );
+ 
+            <Container maxWidth="xl">
+                <Box
+                    sx={{
+                        position: "relative",
+                        zIndex: 2,
+                        display: "flex",
+                        flexDirection: {
+                            xs: "column",
+                            md: isRight ? "row" : "row-reverse",
+                        },
+                        alignItems: "center",
+                        py: 3,
+                        gap: { xs: 1, md: 6 },
+                        mb: { xs: 1, lg: 6 },
+                        mt: 4
+                    }}
+                >
+                    <Box
+                        sx={{
+                            width: { xs: "100%", md: "50%" },
+                            display: "flex",
+                            flexDirection: "column",
+                            color: "white",
+                            textAlign: "left",
+                            pl: { md: isRight ? "0px" : "50px" },
+                            pr: { md: isRight ? "0px" : "50px" },
+                        }}
+                    >
+                        <Typography
+                            sx={{
+                                fontWeight: "bold",
+                                mb: 2,
+                                fontSize: { xs: "2rem", md: "2.5rem" },
+                            }}
+                        >
+                            {project.title}
+                        </Typography>
+ 
+                        <Typography
+                            variant="h6"
+                            sx={{
+                                fontWeight: 600,
+                                mb: 2,
+                                fontSize: { xs: "1.1rem", md: "19px" },
+                            }}
+                        >
+                            {project.subtitle}
+                        </Typography>
+ 
+                        <Typography
+                            sx={{ mb: 2, fontSize: { xs: "1rem", md: "17px" }, width: "95%" }}
+                        >
+                            {project.description}
+                        </Typography>
+ 
+                        <Box component="ul" sx={{ pl: 0, listStylePosition: "inside", mb: 3 }}>
+                            {project.points.map((p, i) => (
+                                <li key={i}>{p}</li>
+                            ))}
+                        </Box>
+ 
+                        <Stack direction="row" flexWrap="wrap" spacing={0.5} mb={3} 
+                        sx={{
+                          gap: { xs: "6px", md: "10px" }, 
+                          }}>
+                            {project.tags.map((tag, i) => (
+                                <Chip
+                                    key={i}
+                                    label={tag}
+                                    sx={{
+                                        backgroundColor: "rgba(255,255,255,0.15)",
+                                        color: "white",
+                                        transition: "all 0.3s ease",
+                                        cursor: "pointer",
+ 
+                                        "&:hover": {
+                                            backgroundColor: "rgba(255,255,255,0.3)",
+                                            transform: "scale(1.05)",
+                                        },
+                                    }}
+                                />
+                            ))}
+                        </Stack>
+ 
+ 
+                        <Button
+                            variant="outlined"
+                            sx={{ color: "white", borderColor: "white", alignSelf: "flex-start" }}
+                        >
+                            View Case Study
+                        </Button>
+                    </Box>
+ 
+                    <Box
+                        component="img"
+                        src={project.overlayImage}
+                        alt="overlay-mobile"
+                        sx={{
+                            display: { xs: "block", sm: "block", md: "none" },
+                            width: { xs: "140px", sm: "160px" },
+                            marginTop: "10px",
+                            marginBottom: "10px",
+                            alignSelf: "center",
+                        }}
+                    />
+                </Box>
+            </Container>
+ 
+            <Box
+                component="img"
+                src={project.overlayImage}
+                alt="overlay-image"
+                sx={{
+                    position: { xs: "static", md: "absolute" },
+                    top: { md: "54%" },
+                    ...(isRight
+                        ? {
+                            right: { md: "44%", lg: "47%" },
+                            transform: { md: "translate(50%, -50%)" },
+                        }
+                        : {
+                            left: { md: "47%" },
+                            transform: { md: "translate(-50%, -50%)" },
+                        }),
+                    width: {
+                        xs: "0px",
+                        md: "150px",
+                        lg: "170px",
+                    },
+                    display: { xs: "none", md: "block" },
+                    zIndex: 3,
+                    mb: { xs: 0, md: "40px" },
+                }}
+            />
+        </Box>
+    );
 }
+ 
+ 
