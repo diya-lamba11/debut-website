@@ -1,5 +1,5 @@
-import { Box, CssBaseline } from "@mui/material";
-import Work from "./Components/work";
+import { Box, CssBaseline, } from "@mui/material";
+import Work from "./components/work";
 import ProjectCard from "./components/projectCard";
 import ExpertiseCard from "./components/expertiseCard";
  
@@ -26,7 +26,7 @@ import openkeylogo from "./assets/openkey-logo.webp";
 export default function App() {
   const projects = [
     {
-      projectTitle: "iFinca",
+      title: "iFinca",
       bgImage: ifincaBg,
       overlayImage: ifinca,
       bgColor: "#317062",
@@ -41,7 +41,7 @@ export default function App() {
       tags: ["Supply chain", "Hyperledger Fabric", "Blockchain"],
     },
     {
-      projectTitle: "Integra Ledger",
+      title: "Integra Ledger",
       bgImage: integraBg,
       overlayImage: ifinca,
       bgColor: "#152c7c",
@@ -56,7 +56,7 @@ export default function App() {
       tags: ["Legal consortium", "Hyperledger Blockchain", "Web platform"],
     },
     {
-      projectTitle: "Friendspire",
+      title: "Friendspire",
       bgImage: friendspireBg,
       overlayImage: ifinca,
       bgColor: "#653fee",
@@ -71,7 +71,7 @@ export default function App() {
       tags: ["Social networking", "iPhone", "Android"],
     },
     {
-      projectTitle: "Unique School",
+      title: "Unique School",
       bgImage: friendspireBg,
       overlayImage: ifinca,
       bgColor: "#173f58",
